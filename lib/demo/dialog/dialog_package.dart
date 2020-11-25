@@ -53,6 +53,7 @@ class _YDDialogState extends State<YDDialog> {
     final height = size.height;
 
     Column contentWidget = Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SizedBox(
           height: widget.title == null ? 0 : 16,
@@ -129,52 +130,32 @@ class _YDDialogState extends State<YDDialog> {
       ],
     );
 
-    // return WillPopScope(
-    //     child: GestureDetector(
-    //       onTap: () {
-    //         widget.outsideDismiss ? _dismissDialog() : null;
-    //       },
-    //       child: Material(
-    //         type: MaterialType.transparency,
-    //           // clipBehavior: Clip.antiAlias,
-    //           child: Center(
-    //             child: Container(
-    //               constraints: BoxConstraints(),
-    //               width: width * 0.8,
-    //               // height: 150,
-    //               child: contentWidget,
-    //               alignment: Alignment.center,
-    //               decoration: BoxDecoration(
-    //                   color: Colors.white,
-    //                   borderRadius: BorderRadius.circular(8)
-    //               ),
-    //             ),
-    //           )
-    //       ),
-    //     ),
-    //     onWillPop: () async {
-    //       return widget.outsideDismiss;
-    //     }
-    // );
-    return Material(
-        type: MaterialType.transparency,
-        // clipBehavior: Clip.antiAlias,
-        child: Container(
-          alignment: Alignment.center,
-          child: Center(
-            child: Container(
-              constraints: BoxConstraints(),
-              // width: width * 0.8,
-              // height: 150,
-              child: contentWidget,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8)
-              ),
-            ),
+    return WillPopScope(
+        child: GestureDetector(
+          onTap: () {
+            widget.outsideDismiss ? _dismissDialog() : null;
+          },
+          child: Material(
+            type: MaterialType.transparency,
+              // clipBehavior: Clip.antiAlias,
+              child: Center(
+                child: Container(
+                  // constraints: BoxConstraints(),
+                  width: width * 0.8,
+                  // height: 150,
+                  child: contentWidget,
+                  // alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8)
+                  ),
+                ),
+              )
           ),
-        )
+        ),
+        onWillPop: () async {
+          return widget.outsideDismiss;
+        }
     );
   }
 

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/demo/advance_dialog_demo.dart';
 import 'package:flutterapp/demo/bottom_sheet_dialog_demo.dart';
+import 'package:flutterapp/demo/dialog/dialog_loading.dart';
 import 'package:flutterapp/demo/dialog/dialog_package.dart';
 
 class AlertDialogRoute extends StatelessWidget {
@@ -237,27 +238,33 @@ class AlertDialogRoute extends StatelessWidget {
         ),
         Text("下边的为统一风格的"),
         RaisedButton(
+          child: Text("LoadingDialog"),
+          onPressed: () {
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => DialogLoadingPage()));
+            showDialog(context: context, builder: (_) => DialogLoadingPage());
+          },
+        ),
+        RaisedButton(
           child: Text("带标题的"),
           onPressed: () {
             showDialog(
                 context: context,
               barrierDismissible: false,
-              builder: (_) {
-                  return YDDialog(
-                    title: "标题",
-                    content: "我系渣渣灰，我系咕天落",
-                    outsideDismiss: false,
-                    isCancel: true,
-                    cancelColor: Color(0xff8a8c99),
-                    confirmColor: Color(0xff33394E),
-                    confirmCallback: () {
-                      print("确定");
-                    },
-                    cancelCallback: () {
-                      print("取消");
-                    },
-                  );
-              }
+              child: YDDialog(
+                title: "标题",
+                content: "我系渣渣灰，我系咕天落",
+                outsideDismiss: false,
+                isCancel: true,
+                cancelColor: Color(0xff8a8c99),
+                confirmColor: Color(0xff33394E),
+                confirmCallback: () {
+                  print("确定");
+                },
+                cancelCallback: () {
+                  print("取消");
+                },
+              ),
             );
           },
         ),

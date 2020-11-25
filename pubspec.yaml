@@ -37,6 +37,8 @@ dependencies:
   redux: ^4.0.0+3
   flutter_redux: ^0.6.0
   scroll_to_index: ^1.0.6
+  lottie: ^0.7.0+1
+  provider: 4.3.2+2
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +54,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/lottie/general_loading.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -4,6 +4,7 @@ import 'package:flutterapp/demo/combination/TurnBoxRoute.dart';
 import 'package:flutterapp/demo/combination/gradinent_button_page.dart';
 import 'package:flutterapp/demo/dialog/dialog_page.dart';
 import 'package:flutterapp/demo/keyboard/keyboard_demo_page.dart';
+import 'package:flutterapp/demo/provider/counter_home_page.dart';
 import 'package:flutterapp/demo/refresh/refresh_demo_page.dart';
 import 'package:flutterapp/demo/refresh/refresh_demo_page2.dart';
 import 'package:flutterapp/demo/scroll/scroll_to_index_page2.dart';
@@ -102,7 +103,8 @@ Map<String, WidgetBuilder> routers = {
   "气泡弹窗": (context) => BubbleDemoPage(),
   "监听键盘弹起": (context) => KeyboardDemoPage(),
   "简单模仿Image组件": (context) => SimpleImagePage(),
-  "dialog列表": (context) => DialogPage()
+  "dialog列表": (context) => DialogPage(),
+  "Provider计数器": (context) => ProviderTestPage()
 };
 
 
