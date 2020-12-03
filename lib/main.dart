@@ -5,13 +5,16 @@ import 'package:flutterapp/demo/combination/gradinent_button_page.dart';
 import 'package:flutterapp/demo/dialog/dialog_page.dart';
 import 'package:flutterapp/demo/keyboard/keyboard_demo_page.dart';
 import 'package:flutterapp/demo/provider/counter_home_page.dart';
+import 'package:flutterapp/demo/provider/my_change_notifier.dart';
 import 'package:flutterapp/demo/refresh/refresh_demo_page.dart';
 import 'package:flutterapp/demo/refresh/refresh_demo_page2.dart';
 import 'package:flutterapp/demo/scroll/scroll_to_index_page2.dart';
 import 'package:flutterapp/demo/skin/page/show_page.dart';
 import 'package:flutterapp/demo/skin/redux/SDLState.dart';
+import 'package:flutterapp/demo/stick/stick_demo_page.dart';
 import 'package:flutterapp/demo/text/text_line_height_page.dart';
 import 'package:flutterapp/utils/common_util.dart';
+import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 import 'demo/bubble/bubble_demo_page.dart';
@@ -34,20 +37,28 @@ void main() {
           locale: Locale('zh', 'CH'))
   );
 
-//  runApp(MyApp());
-  runApp(StoreProvider(
-    store: _store,
-    child: StoreBuilder<SDLState>(
-        builder: (context, store) {
-        return new MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: store.state.themeData,
-            title: 'Song App',
-            home: HomePage(),
-            routes: routers,
-          );
-    })
-  ));
+ runApp(ChangeNotifierProvider(
+     create: (context) => MyChangeNotifier(),
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Song App',
+      home: HomePage(),
+      routes: routers,
+    ),)
+ );
+//   runApp(StoreProvider(
+//     store: _store,
+//     child: StoreBuilder<SDLState>(
+//         builder: (context, store) {
+//         return new MaterialApp(
+//             debugShowCheckedModeBanner: false,
+//             theme: store.state.themeData,
+//             title: 'Song App',
+//             home: HomePage(),
+//             routes: routers,
+//           );
+//     })
+//   ));
 }
 
 class HomePage extends StatelessWidget {
@@ -104,6 +115,7 @@ Map<String, WidgetBuilder> routers = {
   "监听键盘弹起": (context) => KeyboardDemoPage(),
   "简单模仿Image组件": (context) => SimpleImagePage(),
   "dialog列表": (context) => DialogPage(),
+  "Stick悬浮": (context) => StickDemoPage(),
   "Provider计数器": (context) => ProviderTestPage()
 };
 
