@@ -14,6 +14,7 @@ import 'package:flutterapp/demo/skin/redux/SDLState.dart';
 import 'package:flutterapp/demo/stick/stick_demo_page.dart';
 import 'package:flutterapp/demo/text/text_line_height_page.dart';
 import 'package:flutterapp/utils/common_util.dart';
+import 'package:flutterapp/utils/log.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
@@ -37,10 +38,11 @@ void main() {
           locale: Locale('zh', 'CH'))
   );
 
+  Log.init();
  runApp(ChangeNotifierProvider(
      create: (context) => MyChangeNotifier(),
     child: MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       title: 'Song App',
       home: HomePage(),
       routes: routers,
