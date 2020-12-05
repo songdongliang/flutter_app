@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutterapp/common/constant.dart';
 import 'package:flutterapp/net/base_entity.dart';
+import 'package:flutterapp/utils/log.dart';
 
 import 'error_handle.dart';
 
@@ -83,11 +89,16 @@ class DioUtils {
     );
     try {
       final String data = response.data.toString();
-
+      /// 集成测试无法使用 isolate https://github.com/flutter/flutter/issues/24703
+      /// 使用compute条件: 数据大于10KB(粗略使用10*1024)且当前不是集成测试
+      /// 主要目的减少不必要的性能开销
+      final bool isCompute = !Constant.isDriverTest && data.length > 10*1024;
+      debugPrint('isCompute: $isCompute');
+      final Map<String, dynamic> _map = isCompute ? await compute(parseData, data) : parseData(data);
+      return BaseDataModel<T>.fromJson(_map);
     } catch (e) {
       return BaseDataModel<T>(data: null, message: "数据解析错误！", code: ExceptionHandle.parse_error);
     }
-    return null;
   }
 
   Options _checkOptions(String method, Options options) {
@@ -96,4 +107,95 @@ class DioUtils {
     return options;
   }
 
+  Future requestNetwork<T>(Method method, String url, {
+    NetSuccessCallback<T> onSuccess,
+    NetErrorCallback onError,
+    dynamic params,
+    Map<String, dynamic> queryParameters,
+    CancelToken cancelToken,
+    Options options,
+  }) {
+    return _request<T>(method.value, url,
+        data: params,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken
+    ).then<void>((BaseDataModel<T> result) {
+          if (result.code == 0) {
+            if (onSuccess != null) {
+              onSuccess(result.data);
+            }
+          } else {
+            _onError(result.code, result.message, onError);
+          }
+    }, onError: (dynamic e) {
+          _cancelLogPrint(e, url);
+          final NetError error = ExceptionHandle.handleException(e);
+          _onError(error.code, error.msg, onError);
+    });
+  }
+
+  /// 统一处理(onSuccess返回T对象, onSuccessList返回 List<T>)
+  void asyncRequestNetwork<T>(Method method, String url, {
+    NetSuccessCallback<T> onSuccess,
+    NetErrorCallback onError,
+    dynamic params,
+    Map<String, dynamic> queryParameters,
+    CancelToken cancelToken,
+    Options options,
+  }) {
+    Stream.fromFuture(_request<T>(method.value, url,
+      data: params,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    )).asBroadcastStream().listen((result) {
+      if (result.code == 0) {
+        if (onSuccess != null) {
+          onSuccess(result.data);
+        }
+      } else {
+        _onError(result.code, result.message, onError);
+      }
+    }, onError: (dynamic e) {
+
+    });
+  }
+
+  void _cancelLogPrint(dynamic e, String url) {
+    if (e is DioError && CancelToken.isCancel(e)) {
+      Log.e('取消请求接口: $url');
+    }
+  }
+
+  void _onError(int code, String msg, NetErrorCallback onError) {
+    if (code == null) {
+      code = ExceptionHandle.unknown_error;
+      msg = '未知异常';
+    }
+    Log.e('接口请求异常: code: $code, msg: $msg');
+    if (onError != null) {
+      onError(code, msg);
+    }
+  }
+
 }
+
+Map<String, dynamic> parseData(String data) {
+  return json.decode(data) as Map<String, dynamic>;
+}
+
+enum Method {
+  get,
+  post,
+  put,
+  patch,
+  delete,
+  head
+}
+
+/// 使用拓展枚举代替 switch判断取值
+extension MethodExtension on Method {
+  String get value => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD'][index];
+}
+

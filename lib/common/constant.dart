@@ -9,4 +9,6 @@ class Constant {
   /// app在运行release环境时， inProduction为true
   static const bool inProduction = kReleaseMode;
 
+  static bool isDriverTest  = false;
+
 }
