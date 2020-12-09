@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutterapp/deer/res/colors.dart';
+import 'package:flutterapp/deer/res/dimens.dart';
+import 'package:flutterapp/deer/res/gaps.dart';
 import 'package:flutterapp/deer/util/theme_utils.dart';
 import 'package:flutterapp/demo/widgetDemo.dart';
 
@@ -32,7 +36,74 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
 
     if (_backgroundColor == null) {
       _backgroundColor = context.backgroundColor;
+    } else {
+      _backgroundColor = backgroundColor;
     }
+
+    final SystemUiOverlayStyle _overlayStyle = ThemeData.estimateBrightnessForColor(_backgroundColor) == Brightness.dark
+        ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
+
+    final Widget back = isBack ? IconButton(
+        icon: Image.asset(
+            backImg,
+          color: ThemeUtils.getIconColor(context),
+        ),
+        tooltip: 'Back',
+        padding: const EdgeInsets.all(12.0),
+        onPressed: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          Navigator.maybePop(context);
+        }
+    ) : Gaps.empty;
+
+    final Widget action = actionName.isNotEmpty ? Positioned(
+      right: 0.0,
+        child: Theme(
+            data: Theme.of(context).copyWith(
+              buttonTheme: const ButtonThemeData(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                minWidth: 60.0,
+              ),
+            ),
+            child: FlatButton(
+                onPressed: onPressed,
+                child: Text(actionName, key: const Key('actionName'),),
+              textColor: context.isDark ? SColors.dark_text : SColors.text,
+              highlightColor: Colors.transparent,
+            ),
+        ),
+    ) : Gaps.empty;
+
+    final Widget titleWidget = Semantics(
+      namesRoute: true,
+      header: true,
+      child: Container(
+        alignment: centerTitle.isEmpty ? Alignment.centerLeft : Alignment.center,
+        width: double.infinity,
+        child: Text(
+          title.isEmpty ? centerTitle : title,
+          style: const TextStyle(fontSize: Dimens.font_sp18),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 48.0),
+      ),
+    );
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: _overlayStyle,
+        child: Material(
+          color: _backgroundColor,
+          child: SafeArea(
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: <Widget>[
+                titleWidget,
+                back,
+                action
+              ],
+            ),
+          ),
+        ),
+    );
   }
 
   @override

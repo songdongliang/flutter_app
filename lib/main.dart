@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutterapp/deer/login/page/register_page.dart';
 import 'package:flutterapp/demo/combination/TurnBoxRoute.dart';
 import 'package:flutterapp/demo/combination/gradinent_button_page.dart';
 import 'package:flutterapp/demo/dialog/dialog_page.dart';
@@ -18,6 +19,7 @@ import 'package:flutterapp/utils/log.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
+import 'deer/routers/routes.dart';
 import 'demo/bubble/bubble_demo_page.dart';
 import 'demo/http_chunk_demo.dart';
 import 'demo/image/simple_image_page.dart';
@@ -39,6 +41,7 @@ void main() {
   );
 
   Log.init();
+  Routes.initRoutes();
  runApp(ChangeNotifierProvider(
      create: (context) => MyChangeNotifier(),
     child: MaterialApp(
@@ -118,7 +121,8 @@ Map<String, WidgetBuilder> routers = {
   "简单模仿Image组件": (context) => SimpleImagePage(),
   "dialog列表": (context) => DialogPage(),
   "Stick悬浮": (context) => StickDemoPage(),
-  "Provider计数器": (context) => ProviderTestPage()
+  "Provider计数器": (context) => ProviderTestPage(),
+  "deer项目": (context) => RegisterPage(),
 };
 
 
