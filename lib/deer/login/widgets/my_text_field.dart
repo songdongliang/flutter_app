@@ -93,13 +93,13 @@ class _MyTextFieldState extends State<MyTextField> {
         counterText: '',
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            // color: themeData.primaryColor,
+            color: themeData.primaryColor,
             width: 0.8
           ),
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            // color: Theme.of(context).dividerTheme.color,
+            color: Theme.of(context).dividerTheme.color,
             width: 0.8
           ),
         ),
@@ -149,14 +149,14 @@ class _MyTextFieldState extends State<MyTextField> {
         child: FlatButton(
           key: const Key('getVerificationCode'),
             onPressed: _clickable ? _getVCode : null,
-            // color: Colors.transparent,
+            color: Colors.transparent,
             textColor: themeData.primaryColor,
             disabledColor: isDark ? SColors.dark_bg_gray : SColors.text_gray_c,
             disabledTextColor: isDark ? SColors.dark_text : Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(1.0),
               side: BorderSide(
-                // color: _clickable ? themeData.primaryColor : Colors.transparent,
+                color: _clickable ? themeData.primaryColor : Colors.transparent,
                 width: 0.8
               )
             ),

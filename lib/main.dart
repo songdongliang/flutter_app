@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutterapp/deer/login/page/register_page.dart';
+import 'package:flutterapp/deer/provider/theme_provider.dart';
 import 'package:flutterapp/demo/combination/TurnBoxRoute.dart';
 import 'package:flutterapp/demo/combination/gradinent_button_page.dart';
 import 'package:flutterapp/demo/dialog/dialog_page.dart';
@@ -42,15 +43,34 @@ void main() {
 
   Log.init();
   Routes.initRoutes();
- runApp(ChangeNotifierProvider(
-     create: (context) => MyChangeNotifier(),
-    child: MaterialApp(
-      debugShowCheckedModeBanner: true,
-      title: 'Song App',
-      home: HomePage(),
-      routes: routers,
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => MyChangeNotifier()),
+      ChangeNotifierProvider(create: (context) => ThemeProvider())
+    ],
+    child: Consumer<ThemeProvider>(
+        builder: (_, provider, __) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: true,
+            title: 'Song App',
+            home: HomePage(),
+            theme: provider.getTheme(),
+            darkTheme: provider.getTheme(isDarkMode: true),
+            themeMode: provider.getThemeMode(),
+            routes: routers,
+          );
+        },
     ),)
- );
+  );
+ // runApp(ChangeNotifierProvider(
+ //     create: (context) => MyChangeNotifier(),
+ //    child: MaterialApp(
+ //      debugShowCheckedModeBanner: true,
+ //      title: 'Song App',
+ //      home: HomePage(),
+ //      routes: routers,
+ //    ),)
+ // );
 //   runApp(StoreProvider(
 //     store: _store,
 //     child: StoreBuilder<SDLState>(
@@ -101,10 +121,12 @@ class HomePage extends StatelessWidget {
 }
 
 Map<String, WidgetBuilder> routers = {
+
   "多点下载": (context) {
     return HttpChunkRoute();
   },
 //  "Redux": (context) => ReduxDemo(store),
+  "deer项目": (context) => RegisterPage(),
   "换肤": (context) => ShowPage(),
   "switch_page": (context) => SwitchPage(),
   "滑动到指定位置的Item": (context) => ScrollToIndexPage(),
@@ -122,7 +144,7 @@ Map<String, WidgetBuilder> routers = {
   "dialog列表": (context) => DialogPage(),
   "Stick悬浮": (context) => StickDemoPage(),
   "Provider计数器": (context) => ProviderTestPage(),
-  "deer项目": (context) => RegisterPage(),
+
 };
 
 

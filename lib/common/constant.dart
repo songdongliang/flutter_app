@@ -11,4 +11,6 @@ class Constant {
 
   static bool isDriverTest  = false;
 
+  static const String theme = 'AppTheme';
+
 }

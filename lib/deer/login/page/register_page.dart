@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
       MyButton(
         key: const Key('register'),
         onPressed: _clickable ? _register : null,
-        text: 'register',
+        text: '注册',
       )
     ];
   }
