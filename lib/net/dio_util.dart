@@ -49,7 +49,7 @@ class DioUtils {
 
   static Dio _dio;
 
-  static get dio => _dio;
+  get dio => _dio;
 
   DioUtils._() {
     final BaseOptions _options = BaseOptions(

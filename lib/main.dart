@@ -1,6 +1,10 @@
+import 'package:dio/dio.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutterapp/common/constant.dart';
 import 'package:flutterapp/deer/login/page/register_page.dart';
+import 'package:flutterapp/deer/net/interceptor.dart';
 import 'package:flutterapp/deer/provider/theme_provider.dart';
 import 'package:flutterapp/demo/combination/TurnBoxRoute.dart';
 import 'package:flutterapp/demo/combination/gradinent_button_page.dart';
@@ -15,6 +19,7 @@ import 'package:flutterapp/demo/skin/page/show_page.dart';
 import 'package:flutterapp/demo/skin/redux/SDLState.dart';
 import 'package:flutterapp/demo/stick/stick_demo_page.dart';
 import 'package:flutterapp/demo/text/text_line_height_page.dart';
+import 'package:flutterapp/net/dio_util.dart';
 import 'package:flutterapp/utils/common_util.dart';
 import 'package:flutterapp/utils/log.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +38,25 @@ import 'demo/transform/transform_demo_page.dart';
 
 
 
-void main() {
+void main() async {
+
+  void initDio() {
+    final List<Interceptor> interceptors = [];
+    /// 统一添加身份验证请求头
+    interceptors.add(AuthInterceptor());
+    /// 刷新Token
+    interceptors.add(TokenInterceptor());
+    /// 打印Log（生产模式去除)
+    if (!Constant.inProduction) {
+      interceptors.add(LoggingInterceptor());
+    }
+    /// 适配数据(根据自己的数据结构，可自行选择添加)
+    interceptors.add(AdapterInterceptor());
+    setInitDio(
+        baseUrl: 'https://api.github.com/',
+        interceptors: interceptors
+    );
+  }
 
   final _store = Store<SDLState>(appReducer,
       initialState: SDLState(
@@ -41,7 +64,11 @@ void main() {
           locale: Locale('zh', 'CH'))
   );
 
+  WidgetsFlutterBinding.ensureInitialized();
+  /// sp初始化
+  await SpUtil.getInstance();
   Log.init();
+  initDio();
   Routes.initRoutes();
   runApp(MultiProvider(
     providers: [
@@ -84,6 +111,7 @@ void main() {
 //           );
 //     })
 //   ));
+
 }
 
 class HomePage extends StatelessWidget {
