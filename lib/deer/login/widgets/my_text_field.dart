@@ -111,7 +111,7 @@ class _MyTextFieldState extends State<MyTextField> {
       hint: '清空输入框',
       child: GestureDetector(
         child: LoadAssetImage('login/qyg_shop_icon_delete',
-          key: Key('${widget.keyName}'),
+          key: Key('${widget.keyName}_delete'),
           width: 18.0,
           height: 40.0,
         ),

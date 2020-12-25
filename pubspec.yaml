@@ -52,6 +52,10 @@ dependencies:
   sprintf: ^5.0.0
   # https://github.com/ReactiveX/rxdart
   rxdart: 0.24.1
+  # 侧滑删除 https://github.com/letsar/flutter_slidable
+  flutter_slidable: ^0.5.7
+  # Flutter 轮播图 https://github.com/best-flutter/flutter_swiper
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:
