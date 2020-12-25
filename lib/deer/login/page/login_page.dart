@@ -51,8 +51,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
         isBack: false,
         actionName: '验证码登录',
         onPressed: () {
-          // TODO 跳转到验证码页面
-
+          NavigatorUtils.push(context, LoginRouter.smsLoginPage);
         },
       ),
       body: MyScrollView(
