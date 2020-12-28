@@ -2,7 +2,9 @@ import 'package:fluro/fluro.dart';
 import 'package:fluro/src/fluro_router.dart';
 import 'package:flutterapp/deer/login/page/login_page.dart';
 import 'package:flutterapp/deer/login/page/register_page.dart';
+import 'package:flutterapp/deer/login/page/reset_password_page.dart';
 import 'package:flutterapp/deer/login/page/sms_login_page.dart';
+import 'package:flutterapp/deer/login/page/update_password_page.dart';
 import 'package:flutterapp/deer/routers/abstract_router_provider.dart';
 
 /// @Date：2020/12/9
@@ -22,6 +24,8 @@ class LoginRouter implements IRouterProvider {
     router.define(registerPage, handler: Handler(handlerFunc: (_, __) => RegisterPage()));
     router.define(loginPage, handler: Handler(handlerFunc: (_, __) => LoginPage()));
     router.define(smsLoginPage, handler: Handler(handlerFunc: (_, __) => SMSLoginPage()));
+    router.define(resetPasswordPage, handler: Handler(handlerFunc: (_, __) => ResetPasswordPage()));
+    router.define(updatePasswordPage, handler: Handler(handlerFunc: (_, __) => UpdatePasswordPage()));
   }
 
 }

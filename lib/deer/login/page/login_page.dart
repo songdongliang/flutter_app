@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
           style: Theme.of(context).textTheme.subtitle2,
         ),
         onTap: () {
-          // TODO 忘记密码页面
+          NavigatorUtils.push(context, LoginRouter.resetPasswordPage);
         },
       ),
     ),

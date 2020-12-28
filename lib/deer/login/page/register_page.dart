@@ -57,6 +57,8 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
         maxLength: 11,
         keyboardType: TextInputType.phone,
         hintText: '请输入手机号',
+        isInputPwd: false,
+          autoFocus: false,
       ),
       Gaps.vGap8,
       MyTextField(

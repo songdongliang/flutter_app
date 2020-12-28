@@ -125,8 +125,7 @@ class _SMSLoginPageState extends State<SMSLoginPage> with ChangeNotifierMixin<SM
         child: GestureDetector(
           child: Text('忘记密码', style: Theme.of(context).textTheme.subtitle2,),
           onTap: () {
-            // TODO 跳转到重置密码界面
-
+            NavigatorUtils.push(context, LoginRouter.resetPasswordPage);
           },
         ),
       )

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/deer/login/widgets/my_text_field.dart';
+import 'package:flutterapp/deer/res/gaps.dart';
+import 'package:flutterapp/deer/res/styles.dart';
 import 'package:flutterapp/deer/util/change_notifier_mixin.dart';
+import 'package:flutterapp/deer/util/other_utils.dart';
 import 'package:flutterapp/deer/util/toast.dart';
+import 'package:flutterapp/deer/widget/my_app_bar.dart';
+import 'package:flutterapp/deer/widget/my_button.dart';
+import 'package:flutterapp/deer/widget/my_scroll_view.dart';
 
 /// @Date：2020/12/25
 /// @Author：songdongliang
@@ -64,8 +71,56 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: MyAppBar(
+        title: '忘记密码',
+      ),
+      body: MyScrollView(
+        keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2, _nodeText3]),
+        crossAxisAlignment: CrossAxisAlignment.center,
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
+        children: _buildBody(),
+      ),
+    );
+  }
+
+  List<Widget> _buildBody() {
+    return <Widget>[
+      Text('获取验证码', style: TextStyles.textBold26,),
+      Gaps.vGap16,
+      MyTextField(
+          controller: _nameController,
+        focusNode: _nodeText1,
+        maxLength: 11,
+        keyboardType: TextInputType.phone,
+        hintText: '请输入账号',
+      ),
+      Gaps.vGap8,
+      MyTextField(
+          controller: _vCodeController,
+        focusNode: _nodeText2,
+        keyboardType: TextInputType.number,
+        getVCode: () {
+            return Future.value(true);
+        },
+        maxLength: 6,
+        hintText: '请输入验证码',
+      ),
+      Gaps.vGap8,
+      MyTextField(
+          controller: _passwordController,
+        focusNode: _nodeText3,
+        isInputPwd: true,
+        maxLength: 16,
+        keyboardType: TextInputType.visiblePassword,
+        hintText: '请输入密码',
+      ),
+      Gaps.vGap24,
+      MyButton(
+          onPressed: _clickable ? _reset : null,
+        text: '确定',
+      ),
+    ];
   }
 
 }
