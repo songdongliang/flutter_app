@@ -47,7 +47,7 @@ class _MyTextFieldState extends State<MyTextField> {
   bool _isShowDelete = false;
   bool _clickable = true;
   /// 倒计时秒数
-  final int _second = 30;
+  final int _second = 10;
   /// 当前秒数
   int _currentSecond;
   StreamSubscription _subscription;

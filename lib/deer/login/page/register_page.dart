@@ -37,8 +37,8 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
         title: "注册",
       ),
       body: MyScrollView(
-        keyboardConfig: Utils.getKeyboardActionsConfig(context,
-            <FocusNode>[_nodeText1, _nodeText2, _nodeText3]),
+        // keyboardConfig: Utils.getKeyboardActionsConfig(context,
+        //     <FocusNode>[_nodeText1, _nodeText2, _nodeText3]),
         crossAxisAlignment: CrossAxisAlignment.center,
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
         children: _buildBody(),
@@ -78,6 +78,17 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
         },
         maxLength: 6,
         hintText: '请输入验证码',
+      ),
+      Gaps.vGap8,
+      MyTextField(
+        key: const Key('password'),
+        keyName: 'password',
+        focusNode: _nodeText3,
+        isInputPwd: true,
+        controller: _passwordController,
+        keyboardType: TextInputType.visiblePassword,
+        maxLength: 16,
+        hintText: '请输入密码',
       ),
       Gaps.vGap24,
       MyButton(

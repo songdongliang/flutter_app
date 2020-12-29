@@ -22,6 +22,7 @@ import 'package:flutterapp/demo/text/text_line_height_page.dart';
 import 'package:flutterapp/net/dio_util.dart';
 import 'package:flutterapp/utils/common_util.dart';
 import 'package:flutterapp/utils/log.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
@@ -77,14 +78,16 @@ void main() async {
     ],
     child: Consumer<ThemeProvider>(
         builder: (_, provider, __) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: true,
-            title: 'Song App',
-            home: HomePage(),
-            theme: provider.getTheme(),
-            darkTheme: provider.getTheme(isDarkMode: true),
-            themeMode: provider.getThemeMode(),
-            routes: routers,
+          return OKToast(
+              child: MaterialApp(
+                debugShowCheckedModeBanner: true,
+                title: 'Song App',
+                home: HomePage(),
+                theme: provider.getTheme(),
+                darkTheme: provider.getTheme(isDarkMode: true),
+                themeMode: provider.getThemeMode(),
+                routes: routers,
+              )
           );
         },
     ),)
