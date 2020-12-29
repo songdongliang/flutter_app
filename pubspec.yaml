@@ -77,6 +77,9 @@ flutter:
     - assets/lottie/
     - assets/images/
     - assets/images/login/
+    - assets/images/home/
+    - assets/images/order/
+    - assets/images/order/dark/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

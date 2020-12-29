@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
       ),
       body: MyScrollView(
           children: _buildBody,
-        keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2]),
+        // keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2]),
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
       ),
     );

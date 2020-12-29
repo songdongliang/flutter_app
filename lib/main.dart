@@ -26,6 +26,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
+import 'deer/home/splash_page.dart';
 import 'deer/routers/routes.dart';
 import 'demo/bubble/bubble_demo_page.dart';
 import 'demo/http_chunk_demo.dart';
@@ -157,7 +158,7 @@ Map<String, WidgetBuilder> routers = {
     return HttpChunkRoute();
   },
 //  "Redux": (context) => ReduxDemo(store),
-  "deer项目": (context) => RegisterPage(),
+  "deer项目": (context) => SplashPage(),
   "换肤": (context) => ShowPage(),
   "switch_page": (context) => SwitchPage(),
   "滑动到指定位置的Item": (context) => ScrollToIndexPage(),

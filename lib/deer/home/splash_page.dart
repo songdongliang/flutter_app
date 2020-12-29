@@ -52,8 +52,7 @@ class _SplashPageState extends State<SplashPage> {
         SpUtil.putBool(Constant.keyGuide, false);
         _initGuide();
       } else {
-        // TODO 写login界面
-        // NavigatorUtils.push(context, LoginRouter.lo)
+        NavigatorUtils.push(context, LoginRouter.loginPage);
       }
     });
   }
@@ -90,7 +89,7 @@ class _SplashPageState extends State<SplashPage> {
         },
         onTap: (index) {
             if (index == _guideList.length - 1) {
-              // TODO 写login界面
+              NavigatorUtils.push(context, LoginRouter.loginPage);
             }
         },
       ),
