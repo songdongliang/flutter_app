@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/deer/order/page/order_list_page.dart';
 import 'package:flutterapp/deer/order/provider/order_page_provider.dart';
 import 'package:flutterapp/deer/res/colors.dart';
 import 'package:flutterapp/deer/res/dimens.dart';
@@ -102,7 +103,7 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                       key: const Key('pageView'),
                         itemCount: 5,
                         controller: _pageController,
-                        itemBuilder: (_, index) => OrderListPage(index: index);
+                        itemBuilder: (_, index) => OrderListPage(index: index)
                     )
                 )
             ),
