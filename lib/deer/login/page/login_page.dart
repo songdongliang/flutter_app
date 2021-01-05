@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/common/constant.dart';
 import 'package:flutterapp/deer/localization/app_localizations.dart';
 import 'package:flutterapp/deer/login/widgets/my_text_field.dart';
+import 'package:flutterapp/deer/order/order_router.dart';
 import 'package:flutterapp/deer/res/gaps.dart';
 import 'package:flutterapp/deer/res/styles.dart';
 import 'package:flutterapp/deer/routers/login_router.dart';
 import 'package:flutterapp/deer/routers/navigator_utils.dart';
+import 'package:flutterapp/deer/routers/routes.dart';
 import 'package:flutterapp/deer/util/change_notifier_mixin.dart';
 import 'package:flutterapp/deer/util/other_utils.dart';
 import 'package:flutterapp/deer/widget/my_app_bar.dart';
@@ -40,8 +42,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
 
   void _login() {
     SpUtil.putString(Constant.phone, _nameController.text);
-    // TODO 跳转到主页
-
+    NavigatorUtils.push(context, Routes.home);
   }
 
   @override

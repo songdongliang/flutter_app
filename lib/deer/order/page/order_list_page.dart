@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/deer/order/provider/order_page_provider.dart';
+import 'package:flutterapp/deer/order/widgets/order_item.dart';
+import 'package:flutterapp/deer/order/widgets/order_tag_item.dart';
 import 'package:flutterapp/deer/util/change_notifier_mixin.dart';
+import 'package:flutterapp/deer/widget/my_refresh_list.dart';
 import 'package:flutterapp/deer/widget/state_layout.dart';
 import 'package:provider/provider.dart';
 
@@ -8,23 +11,24 @@ import 'package:provider/provider.dart';
 /// @Author：songdongliang
 /// Desc：
 class OrderListPage extends StatefulWidget {
-
   final int index;
 
   const OrderListPage({
     Key key,
     @required this.index,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _OrderListPageState();
-
 }
 
-class _OrderListPageState extends State<OrderListPage> with AutomaticKeepAliveClientMixin<OrderListPage>, ChangeNotifierMixin<OrderListPage> {
-
+class _OrderListPageState extends State<OrderListPage>
+    with
+        AutomaticKeepAliveClientMixin<OrderListPage>,
+        ChangeNotifierMixin<OrderListPage> {
   final ScrollController _controller = ScrollController();
   final StateType _stateType = StateType.loading;
+
   /// 是否正在加载数据
   bool _isLoading = false;
   final int _maxPage = 3;
@@ -51,26 +55,49 @@ class _OrderListPageState extends State<OrderListPage> with AutomaticKeepAliveCl
       },
       child: RefreshIndicator(
         onRefresh: _onRefresh,
-        displacement: 120.0, /// 默认是40， 多添加的80为header高度
+        displacement: 120.0,
+
+        /// 默认是40， 多添加的80为header高度
         child: Consumer<OrderPageProvider>(
-          builder: (_, provider, child) {
-            return CustomScrollView(
-              /// 这里指定controller可以与外层NestedScrollView的滚动分离，
-              /// 避免一处滑动，5个Tab中的列表同步滑动
-              /// 这种方法的缺点是会重新layout列表
-              controller: _index != provider.index ? _controller : null,
-              key: PageStorageKey<String>('$_index'),
-              slivers: <Widget>[
-                SliverOverlapInjector(
-                  /// SliverAppBar的expandedHeight高度，避免重叠
-                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)
-                ),
-                child
-              ],
-            );
-          },
-        ),
-      )
+            builder: (_, provider, child) {
+              return CustomScrollView(
+                /// 这里指定controller可以与外层NestedScrollView的滚动分离，
+                /// 避免一处滑动，5个Tab中的列表同步滑动
+                /// 这种方法的缺点是会重新layout列表
+                controller: _index != provider.index ? _controller : null,
+                key: PageStorageKey<String>('$_index'),
+                slivers: <Widget>[
+                  SliverOverlapInjector(
+
+                      /// SliverAppBar的expandedHeight高度，避免重叠
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context)),
+                  child
+                ],
+              );
+            },
+            child: SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              sliver: _list.isEmpty
+                  ? SliverFillRemaining(
+                      child: StateLayout(
+                      type: _stateType,
+                    ))
+                  : SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                      return index < _list.length
+                          ? (index % 5 == 0
+                              ? const OrderTagItem(
+                                  date: '2021年1月5日', orderTotal: 4)
+                              : OrderItem(
+                                  key: Key('order_item_$index'),
+                                  tabIndex: _index,
+                                  index: index))
+                          : MoreWidget(_list.length, _hasMore(), 10);
+                    }, childCount: _list.length + 1)),
+            )),
+      ),
     );
   }
 
@@ -111,5 +138,4 @@ class _OrderListPageState extends State<OrderListPage> with AutomaticKeepAliveCl
 
   @override
   bool get wantKeepAlive => true;
-
 }

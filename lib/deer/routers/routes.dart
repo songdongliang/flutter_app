@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutterapp/deer/home/home_page.dart';
 import 'package:flutterapp/deer/routers/login_router.dart';
 import 'package:flutterapp/main.dart';
 
@@ -17,10 +18,10 @@ class Routes {
   static void initRoutes() {
     // 这里可以设置路由not found页，这里先用首页替代
     router.notFoundHandler = Handler(
-      handlerFunc: (BuildContext context, Map<String, List<String>> params) => HomePage());
+      handlerFunc: (BuildContext context, Map<String, List<String>> params) => Home());
     // 主界面可以在此类中进行注册（可定义传参）
     router.define(home, handler: Handler(
-        handlerFunc: (BuildContext context, Map<String, List<String>> params) => HomePage()));
+        handlerFunc: (BuildContext context, Map<String, List<String>> params) => Home()));
     // 其他公用界面也可以这样在这弄（可定义传参）
     // router.define(home, handler: Handler(
     //     handlerFunc: (BuildContext context, Map<String, List<String>> params) => MyApp()));
