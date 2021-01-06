@@ -251,7 +251,7 @@ class _TabView extends StatelessWidget {
                 width: 24.0,
                 height: 24.0,
               ),
-              Gaps.vGap24,
+              Gaps.vGap4,
               Text(text)
             ],
           ),

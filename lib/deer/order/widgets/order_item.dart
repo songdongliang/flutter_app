@@ -40,6 +40,7 @@ class OrderItem extends StatelessWidget {
               onTap: () {
                 // TODO 跳转到订单详情
               } ,
+              child: _buildContent(context),
             ),
           )
       ),

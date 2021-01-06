@@ -11,24 +11,22 @@ import 'package:provider/provider.dart';
 /// @Author：songdongliang
 /// Desc：
 class OrderListPage extends StatefulWidget {
-  final int index;
 
   const OrderListPage({
     Key key,
     @required this.index,
-  }) : super(key: key);
+  }): super(key: key);
+
+  final int index;
 
   @override
-  State<StatefulWidget> createState() => _OrderListPageState();
+  _OrderListPageState createState() => _OrderListPageState();
 }
 
-class _OrderListPageState extends State<OrderListPage>
-    with
-        AutomaticKeepAliveClientMixin<OrderListPage>,
-        ChangeNotifierMixin<OrderListPage> {
+class _OrderListPageState extends State<OrderListPage> with AutomaticKeepAliveClientMixin<OrderListPage>, ChangeNotifierMixin<OrderListPage>{
+
   final ScrollController _controller = ScrollController();
   final StateType _stateType = StateType.loading;
-
   /// 是否正在加载数据
   bool _isLoading = false;
   final int _maxPage = 3;
@@ -44,6 +42,11 @@ class _OrderListPageState extends State<OrderListPage>
   }
 
   @override
+  Map<ChangeNotifier, List<VoidCallback>> changeNotifier() {
+    return {_controller: null};
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return NotificationListener(
@@ -55,62 +58,48 @@ class _OrderListPageState extends State<OrderListPage>
       },
       child: RefreshIndicator(
         onRefresh: _onRefresh,
-        displacement: 120.0,
-
-        /// 默认是40， 多添加的80为header高度
+        displacement: 120.0, /// 默认40， 多添加的80为Header高度
         child: Consumer<OrderPageProvider>(
-            builder: (_, provider, child) {
-              return CustomScrollView(
-                /// 这里指定controller可以与外层NestedScrollView的滚动分离，
-                /// 避免一处滑动，5个Tab中的列表同步滑动
-                /// 这种方法的缺点是会重新layout列表
-                controller: _index != provider.index ? _controller : null,
-                key: PageStorageKey<String>('$_index'),
-                slivers: <Widget>[
-                  SliverOverlapInjector(
-
-                      /// SliverAppBar的expandedHeight高度，避免重叠
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                          context)),
-                  child
-                ],
-              );
-            },
-            child: SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              sliver: _list.isEmpty
-                  ? SliverFillRemaining(
-                      child: StateLayout(
-                      type: _stateType,
-                    ))
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                      return index < _list.length
-                          ? (index % 5 == 0
-                              ? const OrderTagItem(
-                                  date: '2021年1月5日', orderTotal: 4)
-                              : OrderItem(
-                                  key: Key('order_item_$index'),
-                                  tabIndex: _index,
-                                  index: index))
-                          : MoreWidget(_list.length, _hasMore(), 10);
-                    }, childCount: _list.length + 1)),
-            )),
+          builder: (_, provider, child) {
+            return CustomScrollView(
+              /// 这里指定controller可以与外层NestedScrollView的滚动分离，避免一处滑动，5个Tab中的列表同步滑动。
+              /// 这种方法的缺点是会重新layout列表
+              controller: _index != provider.index ? _controller : null,
+              key: PageStorageKey<String>('$_index'),
+              slivers: <Widget>[
+                SliverOverlapInjector(
+                  ///SliverAppBar的expandedHeight高度,避免重叠
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                ),
+                child,
+              ],
+            );
+          },
+          child: SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            sliver: _list.isEmpty ? SliverFillRemaining(child: StateLayout(type: _stateType)) :
+            SliverList(
+              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                return index < _list.length ?
+                (index % 5 == 0 ?
+                const OrderTagItem(date: '2020年2月5日', orderTotal: 4) :
+                OrderItem(key: Key('order_item_$index'), index: index, tabIndex: _index,)
+                ) :
+                MoreWidget(_list.length, _hasMore(), 10);
+              },
+                  childCount: _list.length + 1),
+            ),
+          ),
+        ),
       ),
     );
-  }
-
-  @override
-  Map<ChangeNotifier, List<VoidCallback>> changeNotifier() {
-    return {_controller: null};
   }
 
   Future<void> _onRefresh() async {
     await Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _page = 1;
-        _list = List.generate(10, (index) => 'newItem: $index');
+        _list = List.generate(10, (i) => 'newItem：$i');
       });
     });
   }
@@ -129,8 +118,8 @@ class _OrderListPageState extends State<OrderListPage>
     _isLoading = true;
     await Future.delayed(const Duration(seconds: 2), () {
       setState(() {
-        _list.addAll(List.generate(10, (index) => 'newItem: $index'));
-        _page++;
+        _list.addAll(List.generate(10, (i) => 'newItem：$i'));
+        _page ++;
         _isLoading = false;
       });
     });
