@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterapp/deer/home/home_page.dart';
+import 'package:flutterapp/deer/order/order_router.dart';
 import 'package:flutterapp/deer/routers/login_router.dart';
 import 'package:flutterapp/main.dart';
 
@@ -29,6 +30,7 @@ class Routes {
     _listRouter.clear();
     // 各自路由模块在这统一添加
     _listRouter.add(LoginRouter());
+    _listRouter.add(OrderRouter());
     // 初始化路由
     _listRouter.forEach((routerProvider) {
       routerProvider.initRouter(router);

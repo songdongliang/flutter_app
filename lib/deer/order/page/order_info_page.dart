@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutterapp/deer/order/order_router.dart';
 import 'package:flutterapp/deer/res/colors.dart';
@@ -133,10 +131,10 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
       Gaps.vGap8,
       _getGoodsInfoItem('共2件商品', Utils.formatPrice('50.0')),
       _getGoodsInfoItem('配送费', Utils.formatPrice('5.00')),
-      _getGoodsInfoItem('立减', Utils.formatPrice('-2.50')),
-      _getGoodsInfoItem('优惠券', Utils.formatPrice('-5.00')),
-      _getGoodsInfoItem('社区币抵扣', Utils.formatPrice('-5.00')),
-      _getGoodsInfoItem('佣金', Utils.formatPrice('-5.00')),
+      _getGoodsInfoItem('立减', Utils.formatPrice('-2.50'), contentTextColor: red),
+      _getGoodsInfoItem('优惠券', Utils.formatPrice('-5.00'), contentTextColor: red),
+      _getGoodsInfoItem('社区币抵扣', Utils.formatPrice('-5.00'), contentTextColor: red),
+      _getGoodsInfoItem('佣金', Utils.formatPrice('-5.00'), contentTextColor: red),
       Gaps.line,
       Gaps.vGap8,
       _getGoodsInfoItem('合计', Utils.formatPrice('46.50')),

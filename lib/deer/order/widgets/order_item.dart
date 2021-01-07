@@ -1,5 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/deer/order/order_router.dart';
 import 'package:flutterapp/deer/order/widgets/pay_type_dialog.dart';
 import 'package:flutterapp/deer/res/colors.dart';
 import 'package:flutterapp/deer/res/dimens.dart';
@@ -38,7 +39,7 @@ class OrderItem extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
             child: InkWell(
               onTap: () {
-                // TODO 跳转到订单详情
+                NavigatorUtils.push(context, OrderRouter.orderInfoPage);
               } ,
               child: _buildContent(context),
             ),
