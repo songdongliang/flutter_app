@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:fluro/src/fluro_router.dart';
 import 'package:flutterapp/deer/order/page/order_info_page.dart';
 import 'package:flutterapp/deer/order/page/order_page.dart';
+import 'package:flutterapp/deer/order/page/order_search_page.dart';
 import 'package:flutterapp/deer/order/page/order_track_page.dart';
 import 'package:flutterapp/deer/routers/abstract_router_provider.dart';
 
@@ -19,6 +20,7 @@ class OrderRouter implements IRouterProvider {
   void initRouter(FluroRouter router) {
     router.define(orderPage, handler: Handler(handlerFunc: (_, __) => OrderPage()));
     router.define(orderInfoPage, handler: Handler(handlerFunc: (_, __) => OrderInfoPage()));
+    router.define(orderSearchPage, handler: Handler(handlerFunc: (_, __) => OrderSearchPage()));
     router.define(orderTrackPage, handler: Handler(handlerFunc: (_, __) => OrderTrackPage()));
   }
 

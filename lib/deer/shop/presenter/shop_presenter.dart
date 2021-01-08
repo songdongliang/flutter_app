@@ -19,7 +19,7 @@ class ShopPagePresenter extends BasePagePresenter<ShopIMvpView> {
       }
 
       // 接口请求例子
-      asyncRequestNetwork(
+      asyncRequestNetwork<UserEntity>(
           Method.get,
           url: HttpApi.users,
         onSuccess: (data) {

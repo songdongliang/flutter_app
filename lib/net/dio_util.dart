@@ -97,7 +97,7 @@ class DioUtils {
       final Map<String, dynamic> _map = isCompute ? await compute(parseData, data) : parseData(data);
       return BaseDataModel<T>.fromJson(_map);
     } catch (e) {
-      return BaseDataModel<T>(data: null, message: "数据解析错误！", code: ExceptionHandle.parse_error);
+      return BaseDataModel<T>(ExceptionHandle.parse_error, '数据解析错误！', null);
     }
   }
 

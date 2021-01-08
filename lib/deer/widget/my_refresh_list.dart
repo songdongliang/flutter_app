@@ -3,10 +3,106 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/deer/res/gaps.dart';
 import 'package:flutterapp/deer/res/styles.dart';
 import 'package:flutterapp/deer/util/theme_utils.dart';
+import 'package:flutterapp/deer/widget/state_layout.dart';
 
 /// @Date：2021/1/4
 /// @Author：songdongliang
-/// Desc：
+/// Desc：封装下拉刷新与加载更多
+
+typedef RefreshCallback = Future<void> Function();
+typedef LoadMoreCallback = Future<void> Function();
+
+class DeerListView extends StatefulWidget {
+
+  final RefreshCallback onRefresh;
+  final LoadMoreCallback loadMore;
+  final int itemCount;
+  final bool hasMore;
+  final IndexedWidgetBuilder itemBuilder;
+  final StateType stateType;
+  // 一页的数量，默认为10
+  final int pageSize;
+  // padding属性使用时注意会破坏原有的SafeArea, 需要自行计算bottom大小
+  final EdgeInsetsGeometry padding;
+  final double itemExtent;
+
+  const DeerListView({
+    Key key,
+    @required this.itemCount,
+    @required this.itemBuilder,
+    @required this.onRefresh,
+    this.loadMore,
+    this.hasMore = false,
+    this.stateType = StateType.empty,
+    this.pageSize = 10,
+    this.padding,
+    this.itemExtent,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _DeerListViewState();
+
+}
+
+class _DeerListViewState extends State<DeerListView> {
+
+  // 是否正在加载数据
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget child = RefreshIndicator(
+      onRefresh: widget.onRefresh,
+      child: widget.itemCount == 0
+          ? StateLayout(type: widget.stateType)
+          : ListView.builder(
+            itemCount: widget.loadMore == null ? widget.itemCount : widget.itemCount + 1,
+            padding: widget.padding,
+            itemExtent: widget.itemExtent,
+            itemBuilder: (BuildContext context, int index) {
+              if (widget.loadMore == null) {
+                return widget.itemBuilder(context, index);
+              } else {
+                return index < widget.itemCount
+                    ? widget.itemBuilder(context, index)
+                    : MoreWidget(widget.itemCount, widget.hasMore, widget.pageSize);
+              }
+            }
+      ),
+    );
+
+    return SafeArea(
+        child: NotificationListener(
+            child: child,
+          onNotification: (ScrollNotification note) {
+              // 确保是垂直方向滚动，且滑动至底部
+            if (note.metrics.pixels == note.metrics.maxScrollExtent
+                && note.metrics.axis == Axis.vertical) {
+              _loadMore();
+            }
+            return true;
+          },
+        )
+    );
+  }
+
+  Future<void> _loadMore() async {
+    if (widget.loadMore == null) {
+      return;
+    }
+    if (_isLoading) {
+      return;
+    }
+    if (!widget.hasMore) {
+      return;
+    }
+    _isLoading = true;
+    await widget.loadMore();
+    _isLoading = false;
+  }
+
+}
+
 class MoreWidget extends StatelessWidget {
 
   final int itemCount;

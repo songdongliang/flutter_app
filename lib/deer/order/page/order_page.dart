@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/deer/order/order_router.dart';
 import 'package:flutterapp/deer/order/page/order_list_page.dart';
 import 'package:flutterapp/deer/order/provider/order_page_provider.dart';
 import 'package:flutterapp/deer/res/colors.dart';
 import 'package:flutterapp/deer/res/dimens.dart';
 import 'package:flutterapp/deer/res/gaps.dart';
 import 'package:flutterapp/deer/res/styles.dart';
+import 'package:flutterapp/deer/routers/navigator_utils.dart';
 import 'package:flutterapp/deer/util/image_util.dart';
 import 'package:flutterapp/deer/util/theme_utils.dart';
 import 'package:flutterapp/deer/util/screen_util.dart';
@@ -135,7 +137,7 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                   ),
                   tooltip: '搜索',
                   onPressed: () {
-                    // TODO 跳转到 搜索页
+                    NavigatorUtils.push(context, OrderRouter.orderSearchPage);
                   }
               )
             ],
