@@ -250,11 +250,11 @@ class AlertDialogRoute extends StatelessWidget {
           onPressed: () {
             showDialog(
                 context: context,
-              barrierDismissible: false,
+              barrierDismissible: true,
               child: YDDialog(
                 title: "标题",
                 content: "我系渣渣灰，我系咕天落",
-                outsideDismiss: false,
+                outsideDismiss: true,
                 isCancel: true,
                 cancelColor: Color(0xff8a8c99),
                 confirmColor: Color(0xff33394E),

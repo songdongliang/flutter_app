@@ -82,6 +82,7 @@ flutter:
     - assets/images/
     - assets/images/login/
     - assets/images/home/
+    - assets/images/goods/
     - assets/images/order/
     - assets/images/order/dark/
 

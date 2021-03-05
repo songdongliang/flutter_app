@@ -133,6 +133,7 @@ class _YDDialogState extends State<YDDialog> {
     return WillPopScope(
         child: GestureDetector(
           onTap: () {
+            // ignore: unnecessary_statements
             widget.outsideDismiss ? _dismissDialog() : null;
           },
           child: Material(

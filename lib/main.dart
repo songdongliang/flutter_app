@@ -10,6 +10,8 @@ import 'package:flutterapp/demo/combination/TurnBoxRoute.dart';
 import 'package:flutterapp/demo/combination/gradinent_button_page.dart';
 import 'package:flutterapp/demo/dialog/dialog_page.dart';
 import 'package:flutterapp/demo/keyboard/keyboard_demo_page.dart';
+import 'package:flutterapp/demo/lifestyle/lifestyle_test_widget.dart';
+import 'package:flutterapp/demo/notification/notification_test.dart';
 import 'package:flutterapp/demo/provider/counter_home_page.dart';
 import 'package:flutterapp/demo/provider/my_change_notifier.dart';
 import 'package:flutterapp/demo/refresh/refresh_demo_page.dart';
@@ -176,6 +178,8 @@ Map<String, WidgetBuilder> routers = {
   "dialog列表": (context) => DialogPage(),
   "Stick悬浮": (context) => StickDemoPage(),
   "Provider计数器": (context) => ProviderTestPage(),
+  "测试生命周期": (context) => LifeStyleTestWidget(),
+  "自定义notification测试": (context) => NotificationTestPage(),
 
 };
 
